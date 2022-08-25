@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, send_file
 from extractors.indeed import extract_indeed_jobs
 from extractors.wwr import extract_wwr_jobs
+from extractors.saramin import get_saramin_page_count
 from file import save_to_file
 
 app = Flask("JobScrapper")
