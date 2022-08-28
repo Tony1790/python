@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, send_file
 from extractors.indeed import extract_indeed_jobs
 from extractors.wwr import extract_wwr_jobs
-from extractors.saramin import get_saramin_page_count
+from extractors.saramin import extract_saramin_jobs
 from file import save_to_file
 
 app = Flask("JobScrapper")
@@ -19,9 +19,10 @@ def search():
     if keyword in db:
         jobs = db[keyword]
     else:
+        saramin = extract_saramin_jobs(keyword)
         #indeed = extract_indeed_jobs(keyword)
         wwr = extract_wwr_jobs(keyword)
-        jobs = wwr
+        jobs = wwr + saramin
         db[keyword] = jobs
     return render_template("search.html", keyword = keyword, jobs=jobs)
 
